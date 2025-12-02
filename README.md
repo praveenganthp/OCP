@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+here it is simple OCP: 😊✨
+import "./App.css";
+import { OcpViolation } from "./OcpViolation";
+import { OcpCorrect } from "./OcpCorrect";
 
-Currently, two official plugins are available:
+function App() {
+  return (
+    <>
+      <div>
+        <h2>
+          {" "}
+          OCP (Open/Closed Principle) <br /> Components should be OPEN for extension but CLOSED for modification.
+        </h2>
+      </div>
+      <div>
+        <h3>OCP Violoation</h3>
+        <OcpViolation type="card" />
+        <p>
+          ❌ Why this violates OCP? - You must OPEN this component and MODIFY its conditions whenever a new type
+          (crypto, netbanking, etc.) is added. - This makes the component tightly coupled and non-scalable.
+        </p>
+      </div>
+      <div>
+        <h3>OCP Correct</h3>
+        <OcpCorrect type="wallet" />
+        <p>
+          ✅ Why this follows OCP? - The core logic (OCPCorrect component) NEVER changes. - All extensibility happens
+          OUTSIDE using the paymentStrategies map. - New payment method? Just register a new component in the map. - No
+          conditionals, no refactoring → clean and scalable.
+        </p>
+      </div>
+      <div>
+        <h4>Summary:</h4>❌ OCP Violation
+        <ul>
+          {" "}
+          <li>
+            Uses multiple <code>if/else</code> or <code>switch</code> statements to check payment types.
+          </li>{" "}
+          <li>
+            Adding a new payment method (e.g., <code>crypto</code>) requires modifying the existing component.
+          </li>{" "}
+          <li>The main component keeps growing and becomes harder to maintain.</li>{" "}
+          <li>
+            Component is <strong>not closed</strong> for modification → breaks OCP.
+          </li>{" "}
+        </ul>
+        ✅ OCP Correct Implementation
+        <ul>
+          {" "}
+          <li>Each payment type is its own small component.</li>{" "}
+          <li>
+            All payment types are registered inside a <strong>strategy map</strong> (config object).
+          </li>{" "}
+          <li>The main component renders dynamically based on this map.</li>{" "}
+          <li>
+            To add a new payment method:
+            <br /> <code>const CryptoPayment = () =&gt; &lt;div&gt;Processing Crypto&lt;/div&gt;</code>
+            <br /> <code>paymentStrategies.crypto = CryptoPayment;</code>{" "}
+          </li>{" "}
+          <li>No changes are made to the main component.</li>{" "}
+          <li>
+            System is <strong>open for extension</strong> but <strong>closed for modification</strong> → follows OCP
+            perfectly.
+          </li>{" "}
+        </ul>
+      </div>
+    </>
+  );
+}
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+export default App;
